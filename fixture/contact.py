@@ -39,6 +39,7 @@ class ContactHelper:
         # submit deletion
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
+        self.return_to_home_page()
 
     def create(self, contact):
         wd = self.app.wd
@@ -65,3 +66,7 @@ class ContactHelper:
     def open_contacts_page(self):
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "add new").click()
+
+    def return_to_home_page(self):
+        wd = self.app.wd
+        wd.find_element(By.LINK_TEXT, "home").click()
