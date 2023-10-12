@@ -12,20 +12,22 @@ class TestAddContact(unittest.TestCase):
         self.wd.implicitly_wait(30)
 
     def test_add_contact(self):
-        wd = self.wd
-        self.login(wd, "admin", "secret")
-        self.create_contact(wd, Contact("name", "middlename",
+        self.login("admin", "secret")
+        self.create_contact(Contact("name", "middlename",
                                         "lastname", "email"))
-        self.logout(wd)
+        self.logout()
 
-    def logout(self, wd):
+    def logout(self):
+        wd = self.wd
         wd.find_element(By.XPATH, "//body").click()
         wd.find_element(By.LINK_TEXT, "Logout").click()
 
-    def return_to_contacts_page(self, wd):
+    def return_to_contacts_page(self):
+        wd = self.wd
         wd.find_element(By.LINK_TEXT, "home page").click()
 
-    def create_contact(self, wd, contact):
+    def create_contact(self, contact):
+        wd = self.wd
         self.open_contacts_page(wd)
         # fill contact form
         wd.find_element(By.NAME, "firstname").click()
@@ -44,13 +46,15 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(By.XPATH, "//option[@value='[none]']").click()
         # submit contact creation
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[21]").click()
-        self.return_to_contacts_page(wd)
+        self.return_to_contacts_page()
 
 
-    def open_contacts_page(self, wd):
+    def open_contacts_page(self):
+        wd = self.wd
         wd.find_element(By.LINK_TEXT, "add new").click()
 
-    def login(self, wd, username, password):
+    def login(self, username, password):
+        wd = self.wd
         self.open_home_page(wd)
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
@@ -60,7 +64,8 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(By.NAME, "pass").send_keys(password)
         wd.find_element(By.XPATH, "//input[@value='Login']").click()
 
-    def open_home_page(self, wd):
+    def open_home_page(self):
+        wd = self.wd
         wd.get("http://localhost/addressbook/")
 
     def is_element_present(self, how, what):
