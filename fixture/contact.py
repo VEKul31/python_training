@@ -9,7 +9,7 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "home page").click()
 
-    def modification_first_contact(self, contact):
+    def modify_first_contact(self, contact):
         wd = self.app.wd
         # select first contact
         wd.find_element(By.NAME, "selected[]").click()
