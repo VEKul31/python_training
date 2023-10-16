@@ -7,5 +7,3 @@ def test_modify_contact(app):
                                    "lastname", "email"))
     app.contact.modify_first_contact(Contact(name="name2", lastname="lastname2"))
 
-
-
