@@ -5,58 +5,48 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def return_to_contacts_page(self):
+    def modify_first_contact(self, new_contact_data):
         wd = self.app.wd
-        wd.find_element(By.LINK_TEXT, "home page").click()
-
-    def modify_first_contact(self, contact):
-        wd = self.app.wd
-        # select first contact
-        wd.find_element(By.NAME, "selected[]").click()
+        self.open_home_page()
+        self.select_first_contact()
         # init edit contact
         wd.find_element(By.XPATH, "//img[@alt='Edit']").click()
-        # fill contact form
-        wd.find_element(By.NAME, "firstname").click()
-        wd.find_element(By.NAME, "firstname").clear()
-        wd.find_element(By.NAME, "firstname").send_keys(contact.name)
-        wd.find_element(By.NAME, "middlename").click()
-        wd.find_element(By.NAME, "middlename").clear()
-        wd.find_element(By.NAME, "middlename").send_keys(contact.middlename)
-        wd.find_element(By.NAME, "lastname").click()
-        wd.find_element(By.NAME, "lastname").clear()
-        wd.find_element(By.NAME, "lastname").send_keys(contact.lastname)
-        wd.find_element(By.NAME, "email").click()
-        wd.find_element(By.NAME, "email").clear()
-        wd.find_element(By.NAME, "email").send_keys(contact.email)
+        self.fill_contact_form(new_contact_data)
         # update contact
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[22]").click()
         self.return_to_contacts_page()
 
+    def fill_contact_form(self, contact):
+        wd = self.app.wd
+        self.change_field("firstname", contact.name)
+        self.change_field("middlename", contact.middlename)
+        self.change_field("lastname", contact.lastname)
+        self.change_field("email", contact.email)
+
+    def change_field(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element(By.NAME, field_name).click()
+            wd.find_element(By.NAME, field_name).clear()
+            wd.find_element(By.NAME, field_name).send_keys(text)
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element(By.NAME, "selected[]").click()
+
     def delete_first_contact(self):
         wd = self.app.wd
-        # select first contact
-        wd.find_element(By.NAME, "selected[]").click()
+        self.open_home_page()
+        self.select_first_contact()
         # submit deletion
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
-        self.return_to_home_page()
+        self.open_home_page()
 
     def create(self, contact):
         wd = self.app.wd
         self.open_contacts_page()
-        # fill contact form
-        wd.find_element(By.NAME, "firstname").click()
-        wd.find_element(By.NAME, "firstname").clear()
-        wd.find_element(By.NAME, "firstname").send_keys(contact.name)
-        wd.find_element(By.NAME, "middlename").click()
-        wd.find_element(By.NAME, "middlename").clear()
-        wd.find_element(By.NAME, "middlename").send_keys(contact.middlename)
-        wd.find_element(By.NAME, "lastname").click()
-        wd.find_element(By.NAME, "lastname").clear()
-        wd.find_element(By.NAME, "lastname").send_keys(contact.lastname)
-        wd.find_element(By.NAME, "email").click()
-        wd.find_element(By.NAME, "email").clear()
-        wd.find_element(By.NAME, "email").send_keys(contact.email)
+        self.fill_contact_form(contact)
         wd.find_element(By.NAME, "new_group").click()
         wd.find_element(By.XPATH, "//option[@value='[none]']").click()
         # submit contact creation
@@ -67,11 +57,15 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "add new").click()
 
-    def return_to_home_page(self):
+    def open_home_page(self):
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "home").click()
 
+    def return_to_contacts_page(self):
+        wd = self.app.wd
+        wd.find_element(By.LINK_TEXT, "home page").click()
+
     def count(self):
         wd = self.app.wd
-        self.return_to_home_page()
+        self.open_home_page()
         return len(wd.find_elements(By.NAME, "selected[]"))
