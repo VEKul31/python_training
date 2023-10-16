@@ -55,11 +55,13 @@ class ContactHelper:
 
     def open_contacts_page(self):
         wd = self.app.wd
-        wd.find_element(By.LINK_TEXT, "add new").click()
+        if not (wd.current_url.endswith("/edit.php")):
+            wd.find_element(By.LINK_TEXT, "add new").click()
 
     def open_home_page(self):
         wd = self.app.wd
-        wd.find_element(By.LINK_TEXT, "home").click()
+        if not len(wd.find_elements(By.NAME, "searchstring")) == 1:
+            wd.find_element(By.LINK_TEXT, "home").click()
 
     def return_to_contacts_page(self):
         wd = self.app.wd
