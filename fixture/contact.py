@@ -1,4 +1,7 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.wait import WebDriverWait
+
 from model.contact import Contact
 
 
@@ -37,11 +40,14 @@ class ContactHelper:
 
     def delete_first_contact(self):
         wd = self.app.wd
+        wait = WebDriverWait(wd, 0.5)
         self.open_home_page()
         self.select_first_contact()
         # submit deletion
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
+        wait.until((ec.text_to_be_present_in_element
+                    ((By.CLASS_NAME, "msgbox"), "Record successful deleted")))
         self.open_home_page()
 
     def create(self, contact):
