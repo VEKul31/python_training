@@ -9,10 +9,21 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def modify_first_contact(self, new_contact_data):
+    def modify_first_contact(self):
+        self.modify_contact_by_index(0)
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element(By.NAME, "selected[]").click()
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements(By.NAME, "selected[]")[index].click()
+
+    def modify_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         self.open_home_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         # init edit contact
         wd.find_element(By.XPATH, "//img[@alt='Edit']").click()
         self.fill_contact_form(new_contact_data)
@@ -35,15 +46,14 @@ class ContactHelper:
             wd.find_element(By.NAME, field_name).clear()
             wd.find_element(By.NAME, field_name).send_keys(text)
 
-    def select_first_contact(self):
-        wd = self.app.wd
-        wd.find_element(By.NAME, "selected[]").click()
-
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         wait = WebDriverWait(wd, 0.5)
         self.open_home_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         # submit deletion
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
