@@ -104,4 +104,4 @@ class ContactHelper:
                 lastname = element.find_element(By.XPATH, "./td[2]").text
                 name = element.find_element(By.XPATH, "./td[3]").text
                 self.contact_cache.append(Contact(id=id, name=name, lastname=lastname))
-        return self.contact_cache
+        return list(self.contact_cache)
