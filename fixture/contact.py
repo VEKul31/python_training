@@ -39,7 +39,14 @@ class ContactHelper:
         self.change_field("firstname", contact.name)
         self.change_field("middlename", contact.middlename)
         self.change_field("lastname", contact.lastname)
+        self.change_field("address", contact.address)
         self.change_field("email", contact.email)
+        self.change_field("email2", contact.email2)
+        self.change_field("email3", contact.email3)
+        self.change_field("home", contact.homephone)
+        self.change_field("work", contact.workphone)
+        self.change_field("mobile", contact.mobilephone)
+        self.change_field("phone2", contact.secondaryphone)
 
     def change_field(self, field_name, text):
         wd = self.app.wd
@@ -105,11 +112,10 @@ class ContactHelper:
                 id = int(element.find_element(By.TAG_NAME, "input").get_attribute("value"))
                 lastname = element.find_element(By.XPATH, "./td[2]").text
                 name = element.find_element(By.XPATH, "./td[3]").text
-                all_addresses = element.find_element(By.XPATH, "./td[4]").text
+                addresses = element.find_element(By.XPATH, "./td[4]").text
                 all_emails = element.find_element(By.XPATH, "./td[5]").text
                 all_phones = element.find_element(By.XPATH, "./td[6]").text
-                self.contact_cache.append(Contact(id=id, name=name, lastname=lastname,
-                                                  all_addresses_from_home_page=all_addresses,
+                self.contact_cache.append(Contact(id=id, name=name, lastname=lastname, address=addresses,
                                                   all_emails_from_home_page=all_emails,
                                                   all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
@@ -140,14 +146,14 @@ class ContactHelper:
         email2 = wd.find_element(By.NAME, "email2").get_attribute("value")
         email3 = wd.find_element(By.NAME, "email3").get_attribute("value")
         homephone = wd.find_element(By.NAME, "home").get_attribute("value")
-        workphone = wd.find_element(By.NAME, "work").get_attribute("value")
         mobilephone = wd.find_element(By.NAME, "mobile").get_attribute("value")
+        workphone = wd.find_element(By.NAME, "work").get_attribute("value")
         secondaryphone = wd.find_element(By.NAME, "phone2").get_attribute("value")
         return Contact(name=name, middlename=middlename,
                        lastname=lastname, id=id, address=address,
                        email=email, email2=email2, email3=email3,
-                       homephone=homephone, workphone=workphone,
-                       mobilephone=mobilephone, secondaryphone=secondaryphone)
+                       homephone=homephone,  mobilephone=mobilephone,
+                       workphone=workphone, secondaryphone=secondaryphone)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
