@@ -105,11 +105,9 @@ class ContactHelper:
                 id = int(element.find_element(By.TAG_NAME, "input").get_attribute("value"))
                 lastname = element.find_element(By.XPATH, "./td[2]").text
                 name = element.find_element(By.XPATH, "./td[3]").text
-                all_phones = element.find_element(By.XPATH, "./td[6]").text.splitlines()
-                self.contact_cache.append(Contact(id=id, name=name,
-                                                  lastname=lastname, homephone=all_phones[0],
-                                                  mobilephone=all_phones[1], workphone=all_phones[2],
-                                                  secondaryphone=all_phones[3]))
+                all_phones = element.find_element(By.XPATH, "./td[6]").text
+                self.contact_cache.append(Contact(id=id, name=name,lastname=lastname,
+                                                  all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
