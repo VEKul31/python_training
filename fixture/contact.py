@@ -20,6 +20,10 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_elements(By.NAME, "selected[]")[index].click()
 
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element(By.CSS_SELECTOR, "input[value='%s']" % id).click()
+
     def edit_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_elements(By.XPATH, "//img[@alt='Edit']")[index].click()
@@ -29,10 +33,23 @@ class ContactHelper:
         self.open_home_page()
         self.edit_contact_by_index(index)
         self.fill_contact_form(new_contact_data)
-        # update contact
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[22]").click()
         self.return_to_contacts_page()
         self.contact_cache = None
+
+    def modify_contact_by_id(self, id, contact):
+        wd = self.app.wd
+        self.open_home_page()
+        self.open_contact_to_edit_by_id(id)
+        self.fill_contact_form(contact)
+        wd.find_element(By.XPATH, "//div[@id='content']/form/input[22]").click()
+        self.return_to_contacts_page()
+        self.contact_cache = None
+
+    def open_contact_to_edit_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element(By.CSS_SELECTOR, "a[href='edit.php?id=%s']" % id).click()
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
@@ -63,6 +80,19 @@ class ContactHelper:
         wait = WebDriverWait(wd, 0.5)
         self.open_home_page()
         self.select_contact_by_index(index)
+        # submit deletion
+        wd.find_element(By.XPATH, "//input[@value='Delete']").click()
+        wd.switch_to.alert.accept()
+        wait.until((ec.text_to_be_present_in_element
+                    ((By.CLASS_NAME, "msgbox"), "Record successful deleted")))
+        self.open_home_page()
+        self.contact_cache = None
+
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        wait = WebDriverWait(wd, 0.7)
+        self.open_home_page()
+        self.select_contact_by_id(id)
         # submit deletion
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
