@@ -195,3 +195,23 @@ class ContactHelper:
         secondaryphone = re.search("P: (.*)", text).group(1)
         return Contact(homephone=homephone, workphone=workphone,
                        mobilephone=mobilephone,secondaryphone=secondaryphone)
+
+    def add_contact_to_group_by_id(self, contact, group):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_contact_by_id(contact)
+        wd.find_element(By.NAME, "to_group").click()
+        wd.find_element(By.XPATH, "//div[@id='content']/form[2]/div[4]/select/option[@value='%s']" % group).click()
+        wd.find_element(By.NAME, "add").click()
+        wd.find_element(By.XPATH, "//i/a").click()
+        self.contact_cache = None
+
+    def delete_contact_from_group_by_id(self, contact, group):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element(By.NAME, "group").click()
+        wd.find_element(By.XPATH, "//option[@value='%s']" % group).click()
+        self.select_contact_by_id(contact)
+        wd.find_element(By.NAME, "remove").click()
+        wd.find_element(By.XPATH, "//i/a").click()
+        self.contact_cache = None
