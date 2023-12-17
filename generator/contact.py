@@ -36,9 +36,12 @@ testdata = ([Contact(name="", lastname="",
             [
                 Contact(name=random_string("name", 10), lastname=random_string("lastname", 10),
                         address=random_string("address", 10), email=random_string("email", 10),
-                        mobilephone=random_string("mobilephone", 10), workphone=random_string("workphone", 10))
-                for i in range(2)
+                        email2=random_string("email2", 10), email3=random_string("email3", 10),
+                        homephone=random_string("homephone", 10), mobilephone=random_string("mobilephone", 10),
+                        workphone=random_string("workphone", 10), secondaryphone=random_string("secondaryphone", 10))
+                for i in range(n)
             ])
+
 
 testdata2 = [
     Contact(name=name, lastname=lastname, address=address, email=email, mobilephone=mobilephone, workphone=workphone)
