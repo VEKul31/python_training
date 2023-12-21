@@ -14,7 +14,7 @@ def test_delete_some_contact_from_group(app, orm):
     group = random.choice(groups)
     contacts = orm.get_contact_list()
     contact = random.choice(contacts)
-    if contact in orm.get_contact_not_in_group(group):
+    if contact in orm.get_contacts_not_in_group(group):
         app.contact.add_contact_to_group_by_id(contact.id, group.id)
     app.contact.delete_contact_from_group_by_id(contact.id, group.id)
-    assert contact in orm.get_contact_not_in_group(group)
+    assert contact in orm.get_contacts_not_in_group(group)
