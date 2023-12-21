@@ -139,7 +139,7 @@ class ContactHelper:
             self.open_home_page()
             self.contact_cache = []
             for element in wd.find_elements(By.NAME, "entry"):
-                id = int(element.find_element(By.TAG_NAME, "input").get_attribute("value"))
+                id = element.find_element(By.TAG_NAME, "input").get_attribute("value")
                 lastname = element.find_element(By.XPATH, "./td[2]").text
                 name = element.find_element(By.XPATH, "./td[3]").text
                 addresses = element.find_element(By.XPATH, "./td[4]").text
