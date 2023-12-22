@@ -1,0 +1,53 @@
+[
+  {
+    "py/object": "model.contact.Contact",
+    "name": "",
+    "middlename": null,
+    "lastname": "",
+    "id": null,
+    "address": "",
+    "all_emails_from_home_page": null,
+    "email": "",
+    "email2": "",
+    "email3": "",
+    "homephone": "",
+    "mobilephone": "",
+    "workphone": "",
+    "secondaryphone": "",
+    "all_phones_from_home_page": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "name": "nameQc",
+    "middlename": null,
+    "lastname": "lastnameKgKwD",
+    "id": null,
+    "address": "addressT5Fy",
+    "all_emails_from_home_page": null,
+    "email": "emailxdw",
+    "email2": null,
+    "email3": null,
+    "homephone": null,
+    "mobilephone": "mobilephonexYjnaX",
+    "workphone": "workphoneCT7m",
+    "secondaryphone": null,
+    "all_phones_from_home_page": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "name": "namet6VkKwP",
+    "middlename": null,
+    "lastname": "lastnameZXLe",
+    "id": null,
+    "address": "address",
+    "all_emails_from_home_page": null,
+    "email": "email",
+    "email2": null,
+    "email3": null,
+    "homephone": null,
+    "mobilephone": "mobilephonesYe",
+    "workphone": "workphoneFYZDD ",
+    "secondaryphone": null,
+    "all_phones_from_home_page": null
+  }
+]
